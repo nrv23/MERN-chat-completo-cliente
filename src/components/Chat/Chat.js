@@ -5,7 +5,11 @@ import './Chat.scss';
 
 export const Chat = () => {
 
-    const { user } = useSelector(state => state.auth);
+    const { 
+        user: {
+        
+        } 
+    } = useSelector(state => state.auth);
     
     return (
         <div id="chat-container">

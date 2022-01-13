@@ -8,6 +8,11 @@ import {
     GET_USER_ERROR,
     GET_USER_SESSSION_EXPIRED
 } from "../types/auth";
+import { 
+    ACTUALIZAR_PERFIL,
+    ACTUALIZAR_PERFIL_ERROR
+ } from "../types/user";
+
 
 const initialState = {
     user:{},
@@ -19,7 +24,6 @@ const initialState = {
 export const authReducer = (state=initialState,action) => {
 
     switch(action.type) {
-
         case LOGIN:
             return {
                 ...state,
@@ -32,7 +36,6 @@ export const authReducer = (state=initialState,action) => {
                 ...state,
                 error: action.payload
             }
-
         case REGISTER:
             return {
                 ...state,
@@ -40,7 +43,6 @@ export const authReducer = (state=initialState,action) => {
                 token: action.payload.token,
                 isLoggedIn: true
             }
-        
         case REGISTER_ERROR: 
             return {
                 ...state,
@@ -73,6 +75,19 @@ export const authReducer = (state=initialState,action) => {
                 user: {},
                 token: '',
                 error: null
+            }
+        case ACTUALIZAR_PERFIL: 
+
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case ACTUALIZAR_PERFIL_ERROR:
+            console.log(action.payload);
+        return {
+                ...state,
+                error: action.payload
             }
         default:
             return state;
