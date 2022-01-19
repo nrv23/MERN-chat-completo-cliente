@@ -15,14 +15,21 @@ export const showError = (type=ACTUALIZAR_PERFIL_ERROR,payload) => {
 
 export const updateUser =  (obj) => {
 
-    return async dispatch => {
+    console.log(obj)
+    return async dispatch => { 
 
         try {
         
-            const { data:
+            let { data:
                 { user } 
             } = await updateUserProfile(obj);
-    
+
+            const urlImagen = `${process.env.REACT_APP_BACKEND_URL_USER_IMG}${user.avatar}`;
+            user.avatar = urlImagen;
+
+
+            console.log({user});
+
             dispatch({
                 type: ACTUALIZAR_PERFIL,
                 payload: user
@@ -30,7 +37,7 @@ export const updateUser =  (obj) => {
             
     
         } catch (error) {   
-            console.log(error.response.data.data.errors);
+            console.log(error.response.data);
             if(error.response.status === 500) { // ocurrió un error
                 dispatch(showError(
                         ACTUALIZAR_PERFIL_ERROR,

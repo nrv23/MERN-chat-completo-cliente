@@ -17,10 +17,15 @@ export const login = (data,history) => {
 
         try {
 
-            const {data:{
+            let {data:{
                 user,token
             }} = await authService.login(data);
             localStorage.setItem("token",token);
+
+            const urlImagen = `${process.env.REACT_APP_BACKEND_URL_USER_IMG}${user.avatar}`;
+            user.avatar = urlImagen;
+            
+
             await dispatch({
                 type: LOGIN,
                 payload: {
@@ -63,7 +68,6 @@ export const login = (data,history) => {
                 })
             }
         }
-
     }
 }
 
@@ -73,10 +77,14 @@ export const register = (data,history) => {
 
         try {
 
-            const {data:{
+            let {data:{
                 user,token
             }} = await authService.register(data);
             localStorage.setItem("token",token);
+
+            const urlImagen = `${process.env.REACT_APP_BACKEND_URL_USER_IMG}${user.avatar}`;
+            user.avatar = urlImagen;
+
             dispatch({
                 type: REGISTER,
                 payload: {
@@ -139,10 +147,13 @@ export const getCurrentUser = () => {
 
         try {
 
-            const {data:{
+            let {data:{
                 user,token
             }} = await authService.getCurrentUser();
             localStorage.setItem("token",token);
+
+            const urlImagen = `${process.env.REACT_APP_BACKEND_URL_USER_IMG}${user.avatar}`;
+            user.avatar = urlImagen;
     
             dispatch({
                 type: GET_USER,
@@ -163,5 +174,12 @@ export const getCurrentUser = () => {
                 })
             }
         }
+    }
+}
+
+export const mantenerSesion = (history,isLoggedIn) => {
+
+    if(!isLoggedIn){
+        history.replace('/login');
     }
 }

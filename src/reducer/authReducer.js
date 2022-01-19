@@ -77,7 +77,7 @@ export const authReducer = (state=initialState,action) => {
                 error: null
             }
         case ACTUALIZAR_PERFIL: 
-
+            console.log(action.payload)
             return {
                 ...state,
                 user: action.payload

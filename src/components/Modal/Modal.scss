@@ -2,7 +2,7 @@
 
 .modal-mask {
     position: fixed;
-   
+    z-index: 9998;
     top: 0;
     left: 0;
     width: 100%;
@@ -10,11 +10,10 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: table;
     transition: opacity 0.3s ease;
-    z-index: 9999;
-    
+
     .modal-wrapper {
         margin: 2rem 10px 10px 10px;
-        
+
         .modal-container {
             max-width: 400px;
             margin: 0px auto;
@@ -63,11 +62,6 @@
                     border-radius: 10px;
                     cursor: pointer;
                     font-weight: 600;
-                }
-
-                .btn-success {
-                    background-color: $success;
-                    
                 }
             }
         }

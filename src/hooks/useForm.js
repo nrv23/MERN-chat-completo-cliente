@@ -5,11 +5,26 @@ const useForm = (obj = {}) => {
 
   const reset = () => setFormValues(obj);
 
-  const handleInputChange = ({ target: { value, name } }) => {
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
+  const handleInputChange = ({ target }) => {
+   
+
+    if(target.files) {
+      const { files, name } = target;
+
+      setFormValues({
+        ...formValues,
+        [name]: files[0]
+      })
+    } else  {
+
+      const { value, name } = target;
+
+      setFormValues({
+        ...formValues,
+        [name]: value,
+      });
+    }
+
   };
 
   return [formValues, handleInputChange, reset];

@@ -17,27 +17,28 @@ export const Navbar = () => {
     const [showProfileModal, setShowProfileModal] = useState(false);
 
     const {
-        user:{
-            firstName,
-            lastName,
-            avatar,    
-            email,
-            password = '',
-            gender 
-        },
+        user,
         error
     } = useSelector(state => state.auth);
 
-    const [profilePic, setProfilePic] = useState(avatar)
+    let newState = user;
+    newState.password = '';
 
-    const [formValues,handleInputChange] = useForm({
+    const [profilePic, setProfilePic] = useState(null);
+
+    const [formValues,handleInputChange] = useForm(newState);
+
+
+    let { 
+
         firstName,
         lastName,
+        avatar,    
         email,
         password,
-        gender,
-        avatar
-    });
+        gender, 
+
+    } = formValues;
 
     const getValuesSelect = () => {
 
@@ -58,25 +59,26 @@ export const Navbar = () => {
     const handleSubmit = e => {
         console.log(e);
         e.preventDefault();
-        console.log("log")
-        const form = {...formValues};
+        console.log({formValues})
+        
 
-        if(form.password.length < 6) {
+        if(formValues.password.length < 6) {
            return dispatch(showError('Password debe contener al menos 6 caractéres'));
            
         }   
-
         const formData = new FormData();
 
-        for(const key in form) {
-            formData.append(key,form[key]); // crea un objeto donde el key va ser el nombre de la llave y form[key] es el valor de la llave
+        for(const key in formValues) {
+            if(key === 'avatar') {
+                formValues[key] = profilePic;
+            }
+            formData.append(key,formValues[key]); // crea un objeto donde el key va ser el nombre de la llave y form[key] es el valor de la llave
         }
         
         //dispatch para actualizar el perfil
-
         dispatch(updateUser(formData));
-        //setShowProfileModal(false);
         setShowProfileOptions(false);
+        window.location.reload();
     }
 
     const closeModal = e => {
@@ -85,6 +87,8 @@ export const Navbar = () => {
     }
 
     return (
+
+        <>
         <nav id="navbar" className="card-shadow">
             <h2>Chat.io</h2>
             <div className="profile-menu" onClick={showOptions}>
@@ -95,7 +99,7 @@ export const Navbar = () => {
                {
                    showProfileOptions && (
                     <div id="profile-options">
-                        <p onClick={() => setShowProfileModal(true)}>Update Profile</p>
+                        <p className="update-profile" onClick={() => setShowProfileModal(true)}>Update Profile</p>
                         <p onClick={() => {
                             dispatch(logout())
                             history.replace('/login');
@@ -105,8 +109,10 @@ export const Navbar = () => {
                    )
                }
 
-               
-            {
+            </div>
+        </nav>
+
+        {
                 showProfileModal && (
 
                     <Modal click={setShowProfileModal}>
@@ -190,7 +196,10 @@ export const Navbar = () => {
                                     <div className="input-field mb-2">
                                        <input 
                                             type="file"
-                                            onChange={e => setProfilePic(e.target.files[0])}    
+                                            onChange={e => {
+                                                console.log(e.target.files[0]);
+                                                setProfilePic(e.target.files[0])
+                                            }}    
                                         />
                                     </div>
                                    
@@ -204,14 +213,12 @@ export const Navbar = () => {
                                 Close
                             </button>
                             
-                            <button className='btn-success' onClick={handleSubmit}>UPDATE</button>
+                            <button className='btn-success' onClick={handleSubmit}>Update</button>
                         </Fragment>
 
                     </Modal>
                 )
             }
-               
-            </div>
-        </nav>
+        </>
     )
 }
