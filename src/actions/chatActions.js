@@ -1,5 +1,5 @@
 const { getChats } = require("../services/chatService");
-const { CARGAR_CHATS } = require("../types/Chat");
+const { CARGAR_CHATS,SETEAR_CHAT_ACTUAL } = require("../types/Chat");
 
 export const getChatActions =  () => {
 
@@ -32,4 +32,12 @@ export const getChatActions =  () => {
             } 
         }
     } 
+}
+
+export const setCurrentChatAction = chat => {
+
+    return {
+        type: SETEAR_CHAT_ACTUAL,
+        payload: chat
+    }
 }

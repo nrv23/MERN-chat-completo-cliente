@@ -3,13 +3,13 @@ import {
     CARGAR_CHATS,
     CARGAR_CHATS_ERROR,
     INSERTAR_CHAT,
-    INSERTAR_CHAT_ERROR
+    INSERTAR_CHAT_ERROR,
+    SETEAR_CHAT_ACTUAL
 } from '../types/Chat';
 
 const initialState = {
     chats : [],
-    currentChat : {},
-    error: null
+    currentChat : {}
 }
 
 export const chatReducer = (state=initialState,action) => {
@@ -20,6 +20,11 @@ export const chatReducer = (state=initialState,action) => {
             return {
                 ...state,
                 chats: action.payload
+            }
+        case SETEAR_CHAT_ACTUAL:
+            return {
+                ...state,
+                currentChat: action.payload
             }
 
         default:

@@ -36,9 +36,9 @@ export const Chat = () => {
     console.log({chats})
 
     return (
-        <div id="chat-container">
+        <div id='chat-container'>
             <Navbar />
-            <div id="chat-wrap">
+            <div id='chat-wrap'>
                 <FriendList />
                 <Messenger />
             </div>
